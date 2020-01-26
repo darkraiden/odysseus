@@ -18,5 +18,5 @@ func New(logger *logrus.Logger, data string) *Template {
 
 // Log should do something and log using the given logger
 func (t *Template) Log(m string) {
-	t.logger.Info(fmt.Sprintf("%s, %s", t.Name, m))
+	t.logger.Info(fmt.Sprintf("%s", m))
 }
