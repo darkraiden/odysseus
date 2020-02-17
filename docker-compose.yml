@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+    odysseus:
+        build:
+            dockerfile: ./Dockerfile
+            context: ./
+        environment:
+            - CF_API_KEY=${cloudflare_api_key}
+            - CF_API_EMAIL=${cloudflare_api_email}
