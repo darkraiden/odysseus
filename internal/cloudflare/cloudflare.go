@@ -1,6 +1,8 @@
 package cloudflare
 
-import "github.com/cloudflare/cloudflare-go"
+import (
+	"github.com/cloudflare/cloudflare-go"
+)
 
 func New(conf Config) (*API, error) {
 	api, err := cloudflare.New("***REMOVED***", "davidedimauro88@gmail.com")
