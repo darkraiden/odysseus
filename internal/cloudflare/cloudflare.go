@@ -15,7 +15,7 @@ func New(conf Config) (*API, error) {
 		return nil, err
 	}
 
-	return &API{zoneID: zoneID}, nil
+	return &API{ZoneID: zoneID, CloudflareAPI: api}, nil
 }
 
 func (api *API) GetDNSRecords(recordNames []string) ([][]cloudflare.DNSRecord, error) {
