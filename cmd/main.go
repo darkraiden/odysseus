@@ -10,6 +10,16 @@ import (
 	"github.com/darkraiden/odysseus/internal/whatsmyip"
 )
 
+var requiredVars = []string{"CF_API_KEY", "CF_API_EMAIL", "CF_ZONE_NAME"}
+
+func init() {
+	for _, rv := range requiredVars {
+		if os.Getenv(rv) == "" {
+			panic(fmt.Errorf("environment variable '%s' not set", rv))
+		}
+	}
+}
+
 func main() {
 	api, err := cloudflare.New(cloudflare.Config{APIKey: os.Getenv("CF_API_KEY"), Email: os.Getenv("CF_API_EMAIL"), ZoneName: os.Getenv("CF_ZONE_NAME")})
 	if err != nil {
