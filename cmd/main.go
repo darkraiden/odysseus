@@ -38,7 +38,7 @@ func main() {
 	l.Log(fmt.Sprintf("Your Zone ID is: %s", api.ZoneID))
 	for _, r := range records {
 		for _, inner := range r {
-			l.Log(fmt.Sprintf("The DNS Record Content is: %s", inner.Content))
+			l.Log(fmt.Sprintf("The DNS Record Content of '%s' is: %s", inner.Name, inner.Content))
 		}
 	}
 }
