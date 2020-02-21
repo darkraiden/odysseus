@@ -3,12 +3,12 @@ package cloudflare
 import "github.com/cloudflare/cloudflare-go"
 
 type Config struct {
-	apiKey   string
-	email    string
-	zoneName string
+	APIKey   string
+	Email    string
+	ZoneName string
 }
 
 type API struct {
-	zoneID        string
-	cloudflareAPI *cloudflare.API
+	ZoneID        string
+	CloudflareAPI *cloudflare.API
 }
