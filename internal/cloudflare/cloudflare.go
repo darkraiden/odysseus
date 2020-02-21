@@ -20,8 +20,8 @@ func New(conf Config) (*API, error) {
 
 func (api *API) GetDNSRecords(recordNames []string) ([][]cloudflare.DNSRecord, error) {
 	var records [][]cloudflare.DNSRecord
-	for i, recordName := range recordNames {
-		r, err := api.cloudflareAPI.DNSRecords(api.zoneID, cloudflare.DNSRecord{Name: recordName})
+	for _, recordName := range recordNames {
+		r, err := api.CloudflareAPI.DNSRecords(api.ZoneID, cloudflare.DNSRecord{Name: recordName})
 		if err != nil {
 			return nil, err
 		}
