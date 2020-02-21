@@ -10,7 +10,7 @@ func New(conf Config) (*API, error) {
 		return nil, err
 	}
 
-	zoneID, err := api.ZoneIDByName(conf.zoneName)
+	zoneID, err := api.ZoneIDByName(conf.ZoneName)
 	if err != nil {
 		return nil, err
 	}
