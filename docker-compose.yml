@@ -7,3 +7,4 @@ services:
         environment:
             - CF_API_KEY=${cloudflare_api_key}
             - CF_API_EMAIL=${cloudflare_api_email}
+            - CF_ZONE_NAME=${cloudflare_zone_name}

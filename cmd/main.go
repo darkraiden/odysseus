@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	api, err := cloudflare.New(cloudflare.Config{APIKey: os.Getenv("CF_API_KEY"), Email: os.Getenv("CF_API_EMAIL"), ZoneName: "darkraiden.com"})
+	api, err := cloudflare.New(cloudflare.Config{APIKey: os.Getenv("CF_API_KEY"), Email: os.Getenv("CF_API_EMAIL"), ZoneName: os.Getenv("CF_ZONE_NAME")})
 	if err != nil {
 		panic(err)
 	}
