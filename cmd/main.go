@@ -38,7 +38,7 @@ func main() {
 
 	l.Log("Welcome to Odysseus")
 
-	ip, err := whatsmyip.GetLocalIp()
+	ip, err := whatsmyip.GetLocalIP()
 	if err != nil {
 		panic(err)
 	}

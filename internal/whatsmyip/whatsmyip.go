@@ -7,9 +7,16 @@ import (
 
 var url = "https://api.ipify.org?format=text"
 
+// LocalIP is a custom type that will be used
+// to store the result of the HTTP request to the
+// IP URL
 type LocalIP []byte
 
-func GetLocalIp() (*LocalIP, error) {
+// GetLocalIP makes an HTTP GET request to
+// an URL defined with the url variable
+// and returns to the user the Local Public IP
+// under the form of *LocalIP and an error
+func GetLocalIP() (*LocalIP, error) {
 	var ip LocalIP
 
 	resp, err := http.Get(url)
