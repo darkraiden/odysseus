@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	records, err := api.GetDNSRecords([]string{"www.darkraiden.com"})
+	records, err := api.GetDNSRecords([]string{fmt.Sprintf("www.%s", os.Getenv("CF_ZONE_NAME"))})
 	if err != nil {
 		panic(err)
 	}
