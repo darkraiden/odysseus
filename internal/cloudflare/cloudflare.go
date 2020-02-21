@@ -25,7 +25,7 @@ func (api *API) GetDNSRecords(recordNames []string) ([][]cloudflare.DNSRecord, e
 		if err != nil {
 			return nil, err
 		}
-		records[i] = r
+		records = append(records, r)
 	}
 	return records, nil
 }
