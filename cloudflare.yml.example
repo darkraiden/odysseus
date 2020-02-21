@@ -1,0 +1,7 @@
+cloudflare:
+  zone_name: example.com
+  email: user@example.com
+  api_key: cloudflareapikeygoeshere
+  records:
+    - www.example.com
+    - api.example.com
