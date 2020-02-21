@@ -24,10 +24,10 @@ func New(conf Config) (*API, error) {
 // GetDNSRecords pulls all DNS Records associated with each
 // element of the recordNames slice passed to this method as
 // a parameter and returns a [][]cloudflare.DNSRecord and an error
-func (api *API) GetDNSRecords(recordNames []string) ([][]cloudflare.DNSRecord, error) {
+func (api *API) GetDNSRecords(recordNames []interface{}) ([][]cloudflare.DNSRecord, error) {
 	var records [][]cloudflare.DNSRecord
 	for _, recordName := range recordNames {
-		r, err := api.CloudflareAPI.DNSRecords(api.ZoneID, cloudflare.DNSRecord{Name: recordName})
+		r, err := api.CloudflareAPI.DNSRecords(api.ZoneID, cloudflare.DNSRecord{Name: recordName.(string)})
 		if err != nil {
 			return nil, err
 		}
