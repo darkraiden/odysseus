@@ -5,7 +5,7 @@ import (
 )
 
 func New(conf Config) (*API, error) {
-	api, err := cloudflare.New("***REMOVED***", "davidedimauro88@gmail.com")
+	api, err := cloudflare.New(conf.APIKey, conf.Email)
 	if err != nil {
 		return nil, err
 	}
