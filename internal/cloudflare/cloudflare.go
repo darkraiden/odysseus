@@ -2,6 +2,7 @@ package cloudflare
 
 import (
 	"github.com/cloudflare/cloudflare-go"
+	"github.com/darkraiden/odysseus/internal/whatsmyip"
 )
 
 // New creates a new instance of the type *API
@@ -34,4 +35,12 @@ func (api *API) GetDNSRecords(recordNames []interface{}) ([][]cloudflare.DNSReco
 		records = append(records, r)
 	}
 	return records, nil
+}
+
+func (api *API) UpdateDNSRecord(localIP *whatsmyip.LocalIP, recordID string) error {
+	err := api.CloudflareAPI.UpdateDNSRecord(api.ZoneID, recordID, cloudflare.DNSRecord{Content: string(*localIP)})
+	if err != nil {
+		return err
+	}
+	return nil
 }
