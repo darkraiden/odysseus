@@ -11,7 +11,6 @@ var Logger *logrus.Logger
 
 // NewLogger creates a new Logrus Logger and returns a pointer to logrus.Logger
 func NewLogger() *logrus.Logger {
-
 	var level logrus.Level
 	level = LogLevel("info")
 	logger := &logrus.Logger{
