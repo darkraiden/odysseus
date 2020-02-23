@@ -24,9 +24,9 @@ func init() {
 func main() {
 	// wire our template and logger together
 	logger := logs.NewLogger()
-	l := template.New(logger, "Info")
+	lInfo := template.New(logger, "Info")
 
-	l.Log("Welcome to Odysseus")
+	lInfo.Log("Welcome to Odysseus")
 
 	// Initialize Cloudflare API
 	api, err := cloudflare.New(cloudflare.Config{APIKey: viper.Get("cloudflare.api_key").(string), Email: viper.Get("cloudflare.email").(string), ZoneName: viper.Get("cloudflare.zone_name").(string)})
@@ -46,12 +46,19 @@ func main() {
 		panic(err)
 	}
 
-	l.Log(fmt.Sprintf("Your local IP Address is: %s", *ip))
+	lInfo.Log(fmt.Sprintf("Your local IP Address is: %s", *ip))
 
-	l.Log(fmt.Sprintf("Your Zone ID is: %s", api.ZoneID))
+	lInfo.Log(fmt.Sprintf("Your Zone ID is: %s", api.ZoneID))
 	for _, r := range records {
 		for _, inner := range r {
-			l.Log(fmt.Sprintf("The DNS Record Content of '%s' is: %s", inner.Name, inner.Content))
+			if inner.Type == "A" && inner.Content != string(*ip) {
+				err := api.UpdateDNSRecord(ip, inner.ID)
+				if err != nil {
+					lInfo.Log(fmt.Sprintf("Error updating the DNS Record %s. Error: %v", inner.Name, err))
+				} else {
+					lInfo.Log(fmt.Sprintf("The DNS Record %s has been updated successfully.", inner.Name))
+				}
+			}
 		}
 	}
 }
