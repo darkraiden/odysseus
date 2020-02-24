@@ -37,3 +37,9 @@ Now that your config is ready, simply type:
 ```bash
 ./odysseus
 ```
+
+Alternatively, the config file can be stored elsewhere with a different name; if so, ensure to pass the appropriate flags when running the binary:
+
+```bash
+./odysseus -config-name someName.yml -config-path /path/to/config/file
+```

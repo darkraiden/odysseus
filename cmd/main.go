@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/darkraiden/odysseus/internal/cloudflare"
@@ -10,11 +11,22 @@ import (
 	"github.com/spf13/viper"
 )
 
+type flags struct {
+	configName *string
+	configPath *string
+}
+
 func init() {
+	// Read flags
+	var f flags
+	f.configName = flag.String("config-name", "cloudflare.yml", "the name of the config file to be loaded")
+	f.configPath = flag.String("config-path", ".", "the path to the config file")
+	flag.Parse()
+
 	// Read configuration file
-	viper.SetConfigName("cloudflare")
+	viper.SetConfigName(*f.configName)
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
+	viper.AddConfigPath(*f.configPath)
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(err)
