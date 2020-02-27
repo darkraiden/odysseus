@@ -16,7 +16,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: Run Tests
+  - stage: run_tests
     jobs:
       - job: download_deps
         steps:
