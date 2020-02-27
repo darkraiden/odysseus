@@ -15,19 +15,34 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  GO111MODULE: 'on'
+  GOBIN: '$(GOPATH)/bin'
+  GOROOT: '/usr/local/go1.11'
+  GOPATH: '$(system.defaultWorkingDirectory)/gopath'
+  modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)'
+
 stages:
   - stage: run_tests
     jobs:
-      - job: test
+      - job: setup_go_workspace
         steps:
           - bash: |
-              set -eou
-              export GO111MODULE=on
-              go mod download
-            displayName: Fetch dependencies
-          - task: Go@0
-            inputs:
-              command: 'test'
-              arguments: '-v'
-              workingDirectory: '$(System.DefaultWorkingDirectory)'
-            displayName: Run Go Tests
+              mkdir -p '$(GOBIN)'
+              mkdir -p '$(GOPATH)/pkg'
+              mkdir -p '$(modulePath)'
+              shopt -s extglob
+              mv !(gopath) '$(modulePath)'
+              echo '##vso[task.prependpath]$(GOBIN)'
+              echo '##vso[task.prependpath]$(GOROOT)/bin'
+            displayName: 'Set up the Go workspace'
+      - job: test
+        dependsOn: [setup_go_workspace]
+        condition: succeeded('setup_go_workspace')
+        steps:
+          - script: go mod download
+            workingDirectory: '$(modulePath)'
+            displayName: 'Go get dependencies'
+          - script: go test ./... -v
+            workingDirectory: '$(modulePath)'
+            displayName: 'Go run tests'
