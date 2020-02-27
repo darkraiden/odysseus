@@ -22,27 +22,19 @@ variables:
   GOPATH: '$(system.defaultWorkingDirectory)/gopath'
   modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)'
 
-stages:
-  - stage: run_tests
-    jobs:
-      - job: setup_go_workspace
-        steps:
-          - bash: |
-              mkdir -p '$(GOBIN)'
-              mkdir -p '$(GOPATH)/pkg'
-              mkdir -p '$(modulePath)'
-              shopt -s extglob
-              mv !(gopath) '$(modulePath)'
-              echo '##vso[task.prependpath]$(GOBIN)'
-              echo '##vso[task.prependpath]$(GOROOT)/bin'
-            displayName: 'Set up the Go workspace'
-      - job: test
-        dependsOn: [setup_go_workspace]
-        condition: succeeded('setup_go_workspace')
-        steps:
-          - script: go mod download
-            workingDirectory: '$(modulePath)'
-            displayName: 'Go get dependencies'
-          - script: go test ./... -v
-            workingDirectory: '$(modulePath)'
-            displayName: 'Go run tests'
+steps:
+  - bash: |
+      mkdir -p '$(GOBIN)'
+      mkdir -p '$(GOPATH)/pkg'
+      mkdir -p '$(modulePath)'
+      shopt -s extglob
+      mv !(gopath) '$(modulePath)'
+      echo '##vso[task.prependpath]$(GOBIN)'
+      echo '##vso[task.prependpath]$(GOROOT)/bin'
+    displayName: 'Set up the Go workspace'
+  - script: go mod download
+    workingDirectory: '$(modulePath)'
+    displayName: 'Go get dependencies'
+  - script: go test ./... -v
+    workingDirectory: '$(modulePath)'
+    displayName: 'Go run tests'
