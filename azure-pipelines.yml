@@ -16,10 +16,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: test
+  - stage: Run Tests
     jobs:
-      - bash: |
-          set -eou
-          export GO111MODULE=on
-          go mod download
-        displayName: Fetch dependencies
+      - job: download_deps
+        steps:
+          - bash: |
+              set -eou
+              export GO111MODULE=on
+              go mod download
+            displayName: Fetch dependencies
