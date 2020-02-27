@@ -18,17 +18,13 @@ pool:
 stages:
   - stage: run_tests
     jobs:
-      - job: download_deps
+      - job: test
         steps:
           - bash: |
               set -eou
               export GO111MODULE=on
               go mod download
             displayName: Fetch dependencies
-      - job: test
-        dependsOn: [download_deps]
-        condition: succeeded('download_deps')
-        steps:
           - task: Go@0
             inputs:
               command: 'test'
