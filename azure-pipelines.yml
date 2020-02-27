@@ -26,6 +26,8 @@ stages:
               go mod download
             displayName: Fetch dependencies
       - job: test
+        dependsOn: [download_deps]
+        condition: succeeded('download_deps')
         steps:
           - task: Go@0
             inputs:
