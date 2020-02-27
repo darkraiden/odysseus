@@ -39,5 +39,6 @@ steps:
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
   - task: Go@0
-    command: 'build'
-    workingDirectory: '$(modulePath)'
+    inputs:
+      command: 'build'
+      workingDirectory: '$(modulePath)'
