@@ -38,3 +38,6 @@ steps:
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
+  - task: Go@0
+    command: 'build'
+    workingDirectory: '$(modulePath)'
