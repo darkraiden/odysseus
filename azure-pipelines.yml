@@ -34,3 +34,4 @@ stages:
               command: 'test'
               arguments: '-v ./...'
               workingDirectory: '$(modulePath)'
+            displayName: Run Go Tests
