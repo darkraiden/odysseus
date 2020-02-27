@@ -32,6 +32,8 @@ steps:
       echo '##vso[task.prependpath]$(GOBIN)'
       echo '##vso[task.prependpath]$(GOROOT)/bin'
     displayName: 'Set up the Go workspace'
+  - script: curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
+    displayName: Install goreleaser
   - script: go mod download
     workingDirectory: '$(modulePath)'
     displayName: 'Go get dependencies'
