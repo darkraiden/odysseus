@@ -25,3 +25,10 @@ stages:
               export GO111MODULE=on
               go mod download
             displayName: Fetch dependencies
+      - job: test
+        steps:
+          - task: Go@0
+            inputs:
+              command: 'test'
+              arguments: '-v'
+              workingDirectory: '$(modulePath)'
