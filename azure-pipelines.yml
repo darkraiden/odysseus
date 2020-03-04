@@ -34,12 +34,9 @@ steps:
     displayName: 'Set up the Go workspace'
   - script: curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
     displayName: Install goreleaser
-  - script: go mod download
-    workingDirectory: '$(modulePath)'
-    displayName: 'Go get dependencies'
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
-  - script: go build
-    workingDirectory: '$(modulePath)/cmd/'
-    displayName: 'Go build'
+  - script: goreleaser --skip-publish --rm-dist
+    workingDirectory: '$(modulePath)'
+    displayName: 'Run goreleaser'
