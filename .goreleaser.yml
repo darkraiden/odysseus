@@ -18,6 +18,7 @@ archives:
       amd64: x86_64
 checksum:
   name_template: 'checksums.txt'
+  algorithm: sha256
 snapshot:
   name_template: '{{ .Tag }}-next'
 changelog:
