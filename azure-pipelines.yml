@@ -17,9 +17,9 @@ pool:
 
 variables:
   GO111MODULE: 'on'
-  GOPATH: '$(system.defaultWorkingDirectory)/gopath'
   GOBIN: '$(GOPATH)/bin'
   GOROOT: '/usr/local/go1.11'
+  GOPATH: '$(system.defaultWorkingDirectory)/gopath'
   modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)'
 
 steps:
@@ -27,6 +27,8 @@ steps:
       mkdir -p '$(GOBIN)'
       mkdir -p '$(GOPATH)/pkg'
       mkdir -p '$(modulePath)'
+      shopt -s extglob
+      mv !(gopath) '$(modulePath)'
       echo '##vso[task.prependpath]$(GOBIN)'
       echo '##vso[task.prependpath]$(GOROOT)/bin'
     displayName: 'Set up the Go workspace'
@@ -38,8 +40,6 @@ steps:
       rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - checkout: self
-    path: '$(modulePath)'
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
