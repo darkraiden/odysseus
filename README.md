@@ -6,9 +6,9 @@ Odysseus is your friendly DNS pathfinder.
 
 ## Description
 
-Odysseus is designed to update a list of [Cloudflare](https://cloudflare.com) _DNS A Records_ with your ISP Dynamic IP Address. The app reads the config from a `yaml` file, queries the Cloudflare API and if the content of each record has changed (i.e. the content of the DNS record != your IPS public IP), it'll go ahead and update it for you.
+Odysseus is designed to update a list of [Cloudflare](https://cloudflare.com) _DNS A Records_ with your ISP Dynamic IP Address. The app reads the config from a `YAML` file, queries the Cloudflare API and if the content of each record has changed (i.e. the content of the DNS record != your IPS public IP), it'll go ahead and update it for you.
 
-If you wrap this tool in a crontab, you might be all set to host your website/blog on a cluster of Raspberry Pi's.
+If you wrap this tool in a crontab, you might be all set to host your website/blog on a cluster of Raspberry Pis.
 
 ## How to use it
 
