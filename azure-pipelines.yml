@@ -37,6 +37,7 @@ steps:
       export PATH=$PATH:$(pwd)/bin/goreleaser
       sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
       sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
+      rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
   - script: go test ./... -v
