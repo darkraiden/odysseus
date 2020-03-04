@@ -32,12 +32,16 @@ steps:
       echo '##vso[task.prependpath]$(GOBIN)'
       echo '##vso[task.prependpath]$(GOROOT)/bin'
     displayName: 'Set up the Go workspace'
-  - script: curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh && pwd
+  - bash: |
+      curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
+      export PATH=$PATH:$(pwd)/bin/goreleaser
+      cp $(pwd)/bin/goreleaser /var/lib/goreleaser
+      ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
-  - script: '$(system.defaultWorkingDirectory)/bin/goreleaser --skip-publish --rm-dist'
+  - script: goreleaser --skip-publish --rm-dist
     workingDirectory: '$(modulePath)'
     displayName: 'Run goreleaser'
