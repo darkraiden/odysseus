@@ -42,6 +42,6 @@ steps:
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
-  - script: goreleaser --skip-publish --rm-dist
+  - script: goreleaser --snapshot --skip-publish --rm-dist
     workingDirectory: '$(modulePath)'
     displayName: 'Run goreleaser'
