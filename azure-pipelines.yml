@@ -35,8 +35,8 @@ steps:
   - bash: |
       curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
       export PATH=$PATH:$(pwd)/bin/goreleaser
-      cp $(pwd)/bin/goreleaser /var/lib/goreleaser
-      ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
+      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
+      sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
   - script: go test ./... -v
