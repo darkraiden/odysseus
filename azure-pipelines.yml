@@ -42,7 +42,7 @@ steps:
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
-  - script: goreleaser --snapshot --rm-dist
+  - script: goreleaser release --skip-publish --rm-dist
     condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
     workingDirectory: '$(modulePath)'
     displayName: 'Run goreleaser for snapshots'
