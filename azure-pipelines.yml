@@ -34,9 +34,10 @@ steps:
     displayName: 'Set up the Go workspace'
   - script: curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
     displayName: Install goreleaser
+    workingDirectory: '$(system.defaultWorkingDirectory)'
   - script: go test ./... -v
     workingDirectory: '$(modulePath)'
     displayName: 'Go run tests'
-  - script: '${HOME}/bin/goreleaser --skip-publish --rm-dist'
+  - script: '$(system.defaultWorkingDirectory)/bin/goreleaser --skip-publish --rm-dist'
     workingDirectory: '$(modulePath)'
     displayName: 'Run goreleaser'
