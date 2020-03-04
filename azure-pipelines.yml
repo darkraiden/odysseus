@@ -17,21 +17,8 @@ pool:
 
 variables:
   GO111MODULE: 'on'
-  GOBIN: '$(GOPATH)/bin'
-  GOROOT: '/usr/local/go1.11'
-  GOPATH: '$(system.defaultWorkingDirectory)/gopath'
-  modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)'
 
 steps:
-  - bash: |
-      mkdir -p '$(GOBIN)'
-      mkdir -p '$(GOPATH)/pkg'
-      mkdir -p '$(modulePath)'
-      shopt -s extglob
-      mv !(gopath) '$(modulePath)'
-      echo '##vso[task.prependpath]$(GOBIN)'
-      echo '##vso[task.prependpath]$(GOROOT)/bin'
-    displayName: 'Set up the Go workspace'
   - bash: |
       curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
       export PATH=$PATH:$(pwd)/bin/goreleaser
@@ -40,10 +27,6 @@ steps:
       rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - script: go test ./... -v
-    workingDirectory: '$(modulePath)'
-    displayName: 'Go run tests'
   - script: goreleaser release --skip-publish --rm-dist
     condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
-    workingDirectory: '$(modulePath)'
     displayName: 'Run goreleaser for snapshots'
