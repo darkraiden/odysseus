@@ -1,5 +1,7 @@
 # Odysseus
 
+[![Build Status](https://dev.azure.com/darkraiden/Odysseus/_apis/build/status/darkraiden.odysseus?branchName=master)](https://dev.azure.com/darkraiden/Odysseus/_build/latest?definitionId=2&branchName=master)
+
 Odysseus is your friendly DNS pathfinder.
 
 ## Description
