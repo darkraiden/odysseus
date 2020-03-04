@@ -27,6 +27,6 @@ steps:
       rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - script: goreleaser release --skip-publish --rm-dist
+  - script: goreleaser --snapshot --skip-publish --rm-dist
     condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
     displayName: 'Run goreleaser for snapshots'
