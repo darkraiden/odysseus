@@ -30,6 +30,6 @@ steps:
   - script: goreleaser --snapshot --skip-publish --rm-dist
     condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
     displayName: 'Run goreleaser for snapshots'
-  - script: goreleaser --snapshot --rm-dist
-    condition: eq(variables['build.sourceBranch'], 'refs/tags/beta-0.4-2')
+  - script: goreleaser --rm-dist
+    condition: contains(variables['build.sourceBranch'], 'refs/tags/')
     displayName: 'Run goreleaser'
