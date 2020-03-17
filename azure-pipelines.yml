@@ -30,5 +30,5 @@ steps:
     condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
     displayName: 'Run goreleaser for snapshots'
   - script: goreleaser --snapshot --rm-dist
-    condition: eq(variables['build.sourceBranch']
+    condition: eq(variables['build.sourceBranch'], 'refs/heads/master')
     displayName: 'Run goreleaser'
