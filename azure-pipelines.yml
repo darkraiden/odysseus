@@ -4,13 +4,13 @@
 # https://aka.ms/yaml
 
 trigger:
-  branches:
+  tags:
     include:
-      - master
-pr:
-  branches:
-    include:
-      - master
+      - v*
+  pr:
+    branches:
+      include:
+        - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -21,7 +21,6 @@ variables:
 steps:
   - bash: |
       curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
-      export PATH=$PATH:$(pwd)/bin/goreleaser
       sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
       sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
       rm -rf bin
@@ -30,3 +29,6 @@ steps:
   - script: goreleaser --snapshot --skip-publish --rm-dist
     condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
     displayName: 'Run goreleaser for snapshots'
+  - script: goreleaser --snapshot --rm-dist
+    condition: eq(variables['build.sourceBranch']
+    displayName: 'Run goreleaser'
