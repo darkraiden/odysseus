@@ -11,9 +11,6 @@ pr:
   branches:
     include:
       - master
-  tags:
-    include:
-      - beta-*
 
 pool:
   vmImage: 'ubuntu-latest'
