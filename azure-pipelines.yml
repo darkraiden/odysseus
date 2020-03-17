@@ -18,6 +18,7 @@ pool:
 
 variables:
   GO111MODULE: 'on'
+  GITHUB_TOKEN: $(GITHUB_TOKEN)
 
 steps:
   - bash: |
@@ -27,8 +28,8 @@ steps:
       rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - script: goreleaser --snapshot --skip-publish --rm-dist
-    condition: ne(variables['build.sourceBranch'], 'refs/heads/master')
+  - script: goreleaser --snapshot --skip-publish --rm-dist && echo $GITHUB_TOKEN
+    condition: not(contains(variables['build.sourceBranch'], 'refs/tags/'))
     displayName: 'Run goreleaser for snapshots'
   - script: goreleaser --rm-dist
     condition: contains(variables['build.sourceBranch'], 'refs/tags/')
