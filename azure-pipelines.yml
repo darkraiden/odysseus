@@ -18,6 +18,7 @@ pool:
 
 variables:
   GO111MODULE: 'on'
+  GITHUB_TOKEN: $env:GITHUB_TOKEN
 
 steps:
   - bash: |
