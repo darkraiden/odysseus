@@ -7,10 +7,10 @@ trigger:
   tags:
     include:
       - v*
-  pr:
-    branches:
-      include:
-        - master
+pr:
+  branches:
+    include:
+      - master
 
 pool:
   vmImage: 'ubuntu-latest'
