@@ -18,12 +18,11 @@ pool:
 
 variables:
   GO111MODULE: 'on'
-  GITHUB_TOKEN: $env:GITHUB_TOKEN
 
 steps:
   - bash: |
       curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
-      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
+      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser && echo $(GITHUB_TOKEN)
       sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
       rm -rf bin
     displayName: Install goreleaser
