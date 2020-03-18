@@ -22,7 +22,7 @@ variables:
 steps:
   - bash: |
       curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
-      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser && echo $(GITHUB_TOKEN)
+      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
       sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
       rm -rf bin
     displayName: Install goreleaser
@@ -33,3 +33,5 @@ steps:
   - script: goreleaser --rm-dist
     condition: contains(variables['build.sourceBranch'], 'refs/tags/')
     displayName: 'Run goreleaser'
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
