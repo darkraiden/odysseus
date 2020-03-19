@@ -1,22 +1,33 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+  tags:
+    include:
+      - v*
+pr:
+  branches:
+    include:
+      - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- task: Go@0
-  inputs:
-    command: 'get'
-    arguments: '-d'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+variables:
+  GO111MODULE: 'on'
 
-- task: Go@0
-  inputs:
-    command: 'build'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+steps:
+  - bash: |
+      curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
+      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
+      sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
+      rm -rf bin
+    displayName: Install goreleaser
+    workingDirectory: '$(system.defaultWorkingDirectory)'
+  - script: go mod download && go test ./...
+    displayName: 'Run go test command'
+  - script: goreleaser --snapshot --skip-publish --rm-dist
+    condition: not(contains(variables['build.sourceBranch'], 'refs/tags/'))
+    displayName: 'Run goreleaser for snapshots'
+  - script: goreleaser --rm-dist
+    condition: contains(variables['build.sourceBranch'], 'refs/tags/')
+    displayName: 'Run goreleaser'
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)

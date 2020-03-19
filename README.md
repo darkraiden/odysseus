@@ -1,19 +1,24 @@
 # Odysseus
 
+[![Build Status](https://dev.azure.com/darkraiden/Odysseus/_apis/build/status/darkraiden.odysseus?branchName=master)](https://dev.azure.com/darkraiden/Odysseus/_build/latest?definitionId=2&branchName=master)
+
 Odysseus is your friendly DNS pathfinder.
 
 ## Description
 
-Odysseus is designed to update a list of [Cloudflare](https://cloudflare.com) _DNS A Records_ with your ISP Dynamic IP Address. The app reads the config from a `yaml` file, queries the Cloudflare API and if the content of each record has changed (i.e. the content of the DNS record != your IPS public IP), it'll go ahead and update it for you.
+Odysseus is designed to update a list of [Cloudflare](https://cloudflare.com) _DNS A Records_ with your ISP Dynamic IP Address. The app reads the config from a `YAML` file, queries the Cloudflare API and if the content of each record has changed (i.e. the content of the DNS record != your IPS public IP), it'll go ahead and update it for you.
 
-If you wrap this tool in a crontab, you might be all set to host your website/blog on a cluster of Raspberry Pi's.
+If you wrap this tool in a crontab, you might be all set to host your website/blog on a cluster of Raspberry Pis.
 
 ## How to use it
 
 First things first, download the `odysseus` binary:
 
 ```bash
-echo "Instructions on how to download the binary here"
+mdir -p /opt/odysseus && cd /opt/odysseus
+wget https://github.com/darkraiden/odysseus/releases/download/v0.4/odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
+tar zxvf odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
+rm odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
 ```
 
 In the same directory where odysseus was downloaded, create a file called `cloudflare.yml`:
