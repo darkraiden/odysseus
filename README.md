@@ -48,3 +48,61 @@ Alternatively, the config file can be stored elsewhere with a different name; if
 ```bash
 ./odysseus -config-name someName.yml -config-path /path/to/config/file
 ```
+
+## Installing from source
+
+Odysseus can be built on Linux, Mac OS or Windows; the build commands might change slightly depending on the OS or Processor Architecture.
+
+### Requirements
+
+* git
+* go 1.14+
+* a Cloudflare API Key
+* docker (optional)
+* docker-compose (optional)
+
+### Setting up workspace
+
+Clone the project in your `$GOPATH`:
+
+```bash
+cd $GOPATH
+mkdir -p src/github.com/darkraiden
+git clone https://github.com/darkraiden/odysseus src/github.com/darkraiden/odysseus
+cd src/github.com/darkraiden/odysseus
+```
+
+### Building
+
+Install the app dependencies using `go mod`:
+
+```bash
+export GO111MODULE=on
+go mod download
+```
+
+Finally, build odysseus:
+
+```bash
+env GOOS=<targetOsHere> GOARCH=<targetArchitecture> go build main.go -o odysseus
+```
+
+To execute the application, ensure the `cloudflare.yml` file is created; check the [cloudflare.yml.example](cloudflare.yml.example) file for more information.
+
+If you don't want to compile odysseus on your workstation, a `docker-compose.yml` file is provided so that the app can be compiled inside a Docker container:
+
+```bash
+docker-compose up --build
+```
+
+### Testing
+
+The test suite can be run with `go test`:
+
+```bash
+go test ./...
+```
+
+## License
+
+Licensed under the MIT License: [https://mit-license.org](https://mit-license.org/)
