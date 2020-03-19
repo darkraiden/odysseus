@@ -84,7 +84,7 @@ go mod download
 Finally, build odysseus:
 
 ```bash
-env GOOS=<targetOsHere> GOARCH=<targetArchitecture> go build main.go -o odysseus
+env GOOS=<targetOsHere> GOARCH=<targetArchitecture> go build cmd/odysseus/main.go -o odysseus
 ```
 
 To execute the application, ensure the `cloudflare.yml` file is created; check the [cloudflare.yml.example](cloudflare.yml.example) file for more information.
