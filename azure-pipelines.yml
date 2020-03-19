@@ -27,6 +27,8 @@ steps:
       rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
+  - script: go mod download && go test ./...
+    displayName: 'Run go test command'
   - script: goreleaser --snapshot --skip-publish --rm-dist
     condition: not(contains(variables['build.sourceBranch'], 'refs/tags/'))
     displayName: 'Run goreleaser for snapshots'
