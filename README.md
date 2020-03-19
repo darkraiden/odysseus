@@ -15,7 +15,10 @@ If you wrap this tool in a crontab, you might be all set to host your website/bl
 First things first, download the `odysseus` binary:
 
 ```bash
-echo "Instructions on how to download the binary here"
+mdir -p /opt/odysseus && cd /opt/odysseus
+wget https://github.com/darkraiden/odysseus/releases/download/v0.4/odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
+tar zxvf odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
+rm odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
 ```
 
 In the same directory where odysseus was downloaded, create a file called `cloudflare.yml`:
