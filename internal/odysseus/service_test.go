@@ -43,5 +43,27 @@ func TestService_UpdateDNSWithLocalIP(t *testing.T) {
 		assert.Error(t, err)
 		assert.Equal(t, err, someError)
 	})
+	t.Run("returns an error given a failure to get DNS Records", func(t *testing.T) {
+		ctrl := gomock.NewController(t)
+		defer ctrl.Finish()
+
+		ip := mockip.NewMockGetter(ctrl)
+		dnsm := mockdns.NewMockManager(ctrl)
+		someErr := errors.New("some-error")
+		someRecords := []string{"some-record"}
+
+		s, err := odysseus.NewService(dnsm, ip)
+		require.NoError(t, err)
+
+		gomock.InOrder(
+			ip.EXPECT().GetLocal().Return("192.168.0.1", nil),
+			dnsm.EXPECT().GetDNSRecords(someRecords).Return(nil, someErr),
+		)
+
+		err = s.UpdateDNSWithLocalIP(someRecords)
+
+		assert.Error(t, err)
+
+	})
 
 }

@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"github.com/darkraiden/odysseus/internal/DNS"
+	"github.com/darkraiden/odysseus/internal/ipaddress"
 	"github.com/darkraiden/odysseus/internal/odysseus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"net/http"
 )
 
 type flags struct {
@@ -50,14 +52,19 @@ func main() {
 
 	}
 
-	s, err := odysseus.NewService(a)
+	ipGetter, err := ipaddress.NewService(http.DefaultClient)
 	if err != nil {
 		log.Fatalf("fucked it: %s", err.Error())
 	}
 
+	s, err := odysseus.NewService(a, ipGetter)
+	if err != nil {
+		log.Fatalf("Failed to create a service: %s", err.Error())
+	}
+
 	err = s.UpdateDNSWithLocalIP(viper.Get("cloudflare.records").([]string))
 	if err != nil {
-		log.Fatalf("fucked it: %s", err.Error())
+		log.Fatalf("Failed to update DNS with local IP: %s", err.Error())
 	}
 
 	log.Info("wahoo! did it!")
