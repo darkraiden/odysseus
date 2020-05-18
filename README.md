@@ -12,11 +12,13 @@ If you wrap this tool in a crontab, you might be all set to host your website/bl
 
 ## How to use it
 
+### Run it as a binary
+
 First things first, download the `odysseus` binary:
 
 ```bash
 mdir -p /opt/odysseus && cd /opt/odysseus
-wget https://github.com/darkraiden/odysseus/releases/download/v0.4/odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
+wget https://github.com/darkraiden/odysseus/releases/download/<version>/odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
 tar zxvf odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
 rm odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
 ```
@@ -47,6 +49,16 @@ Alternatively, the config file can be stored elsewhere with a different name; if
 
 ```bash
 ./odysseus -config-name someName.yml -config-path /path/to/config/file
+```
+
+### Run it as a Docker container
+
+First things first, create a file called `cloudflare.yml`, as showed in the [Run It as a Binary](#run-it-as-a-binary) section, and save it somewhere in your filesystem;
+
+Finally, run odysseus' Docker container:
+
+```bash
+docker run -v /path/to/cloudflare.yml:/app/cloudflare.yml davidedimauro88/odysseus:<version>
 ```
 
 ## Installing from source
