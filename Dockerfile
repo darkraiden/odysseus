@@ -19,7 +19,6 @@ RUN adduser -S -D -H -h /app -u 1001 odysseus
 USER odysseus
 
 COPY --from=builder /go/src/github.com/darkraiden/odysseus/odysseus /app/odysseus
-COPY --from=builder /go/src/github.com/darkraiden/odysseus/cloudflare.yml /app/cloudflare.yml
 
 WORKDIR /app
 
