@@ -6,17 +6,18 @@ before:
   hooks:
     - go mod download
 builds:
-  env:
-    - CGO_ENABLED=0
-  main: ./cmd/odysseus/main.go
-  goos:
-    - darwin
-    - windows
-    - linux
-  goarch:
-    - 386
-    - amd64
-    - arm
+  -
+    env:
+      - CGO_ENABLED=0
+    main: ./cmd/odysseus/main.go
+    goos:
+      - darwin
+      - windows
+      - linux
+    goarch:
+      - 386
+      - amd64
+      - arm
     
 archives:
   - replacements:
