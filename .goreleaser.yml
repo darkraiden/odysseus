@@ -16,6 +16,7 @@ archives:
       windows: Windows
       386: i386
       amd64: x86_64
+      arm: arm
 checksum:
   name_template: 'checksums.txt'
   algorithm: sha256
