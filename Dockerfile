@@ -14,7 +14,7 @@ RUN go build -o odysseus ./cmd/odysseus/main.go
 
 FROM alpine:3.11.3
 
-RUN adduser -S -D -H -h /app odysseus
+RUN adduser -S -D -H -h /app -u 1001 odysseus
 
 USER odysseus
 
