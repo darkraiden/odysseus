@@ -18,9 +18,9 @@ First things first, download the `odysseus` binary:
 
 ```bash
 mdir -p /opt/odysseus && cd /opt/odysseus
-wget https://github.com/darkraiden/odysseus/releases/download/<version>/odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
-tar zxvf odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
-rm odysseus_<version>_<Linux|Darwin>_<i386|x86_64>.tar.gz
+wget https://github.com/darkraiden/odysseus/releases/download/<version>/odysseus_<version>_<Linux|Darwin>_<i386|x86_64|armv6>.tar.gz
+tar zxvf odysseus_<version>_<Linux|Darwin>_<i386|x86_64|armv6>.tar.gz
+rm odysseus_<version>_<Linux|Darwin>_<i386|x86_64|armv6>.tar.gz
 ```
 
 In the same directory where odysseus was downloaded, create a file called `cloudflare.yml`:
