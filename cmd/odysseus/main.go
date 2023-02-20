@@ -2,12 +2,12 @@ package main
 
 import (
 	"flag"
-	"fmt"
-
-	"github.com/darkraiden/odysseus/internal/cloudflare"
-	"github.com/darkraiden/odysseus/internal/whatsmyip"
+	"github.com/darkraiden/odysseus/internal/DNS"
+	"github.com/darkraiden/odysseus/internal/ipaddress"
+	"github.com/darkraiden/odysseus/internal/odysseus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"net/http"
 )
 
 type flags struct {
@@ -34,46 +34,38 @@ func init() {
 	viper.AddConfigPath(*f.configPath)
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Panic(err)
+		log.Fatalf("error loading viper config: %s", err.Error())
 	}
 }
 
 func main() {
 	log.Info("Welcome to Odysseus")
 
-	// Initialize Cloudflare API
-	api, err := cloudflare.New(cloudflare.Config{APIKey: viper.Get("cloudflare.api_key").(string), Email: viper.Get("cloudflare.email").(string), ZoneName: viper.Get("cloudflare.zone_name").(string)})
+	a, err := DNS.New(viper.Get(
+		"cloudflare.api_key").(string),
+		viper.Get("cloudflare.email").(string),
+		viper.Get("cloudflare.zone_name").(string),
+	)
+
 	if err != nil {
-		log.Panic(err)
+		log.Fatalf("fucked it: %s", err.Error())
+
 	}
 
-	// Get DNS Records
-	records, err := api.GetDNSRecords(viper.Get("cloudflare.records").([]interface{}))
+	ipGetter, err := ipaddress.NewService(http.DefaultClient)
 	if err != nil {
-		log.Panic(err)
+		log.Fatalf("fucked it: %s", err.Error())
 	}
 
-	// Get Public IP Address
-	ip, err := whatsmyip.GetLocalIP()
+	s, err := odysseus.NewService(a, ipGetter)
 	if err != nil {
-		log.Panic(err)
+		log.Fatalf("Failed to create a service: %s", err.Error())
 	}
 
-	log.Info(fmt.Sprintf("Your local IP Address is: %s", *ip))
-
-	log.Info(fmt.Sprintf("Your Zone ID is: %s", api.ZoneID))
-	for _, r := range records {
-		for _, inner := range r {
-			if inner.Type == "A" && inner.Content != string(*ip) {
-				err := api.UpdateDNSRecord(ip, inner.ID)
-				if err != nil {
-					log.Error(fmt.Sprintf("Error updating the DNS Record %s. Error: %v", inner.Name, err))
-				} else {
-					log.Info(fmt.Sprintf("The DNS Record %s has been updated successfully.", inner.Name))
-				}
-			} else {
-				log.Info(fmt.Sprintf("No changes needed for the DNS record %s", inner.Name))
-			}
-		}
+	err = s.UpdateDNSWithLocalIP(viper.Get("cloudflare.records").([]string))
+	if err != nil {
+		log.Fatalf("Failed to update DNS with local IP: %s", err.Error())
 	}
+
+	log.Info("wahoo! did it!")
 }

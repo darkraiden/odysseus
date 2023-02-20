@@ -24,7 +24,9 @@ steps:
       rm -rf bin
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - script: go mod download && go test ./...
+  - script: go install github.com/golang/mock/mockgen
+    displayName: 'Install mockgen'
+  - script: go mod download && go generate ./... && go test ./...
     displayName: 'Run go test command'
   - script: goreleaser --snapshot --skip-publish --rm-dist
     condition: not(contains(variables['build.sourceBranch'], 'refs/tags/'))
