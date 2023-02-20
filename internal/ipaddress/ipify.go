@@ -23,16 +23,11 @@ func NewService(doer Doer) (*Ipify, error) {
 	return &Ipify{httpClient: doer}, nil
 }
 
-// LocalIP is a custom type that will be used
-// to store the result of the HTTP request to the
-// IP URL
-
 // GetLocalIP makes an HTTP GET request to
 // an URL defined with the url variable
 // and returns to the user the Local Public IP
 // under the form of *LocalIP and an error
 func (s Ipify) GetLocal() (string, error) {
-
 	req, err := http.NewRequest("GET", getIPURL, nil)
 	if err != nil {
 		return "", err
