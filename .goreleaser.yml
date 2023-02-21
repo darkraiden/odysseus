@@ -18,7 +18,7 @@ builds:
       - 386
       - amd64
       - arm
-    
+
 archives:
   - replacements:
       darwin: Darwin

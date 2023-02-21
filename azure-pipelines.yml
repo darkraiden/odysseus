@@ -18,15 +18,22 @@ variables:
 
 steps:
   - bash: |
-      curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
-      sudo cp $(pwd)/bin/goreleaser /var/lib/goreleaser
-      sudo ln -s /var/lib/goreleaser /usr/local/bin/goreleaser
-      rm -rf bin
+      echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+      sudo apt update
+      sudo apt install goreleaser
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - script: go install github.com/golang/mock/mockgen
+  - bash: |
+      GO111MODULE=off go get github.com/golang/mock/mockgen
+      GO111MODULE=off go install github.com/golang/mock/mockgen
     displayName: 'Install mockgen'
-  - script: go mod download && go generate ./... && go test ./...
+  - bash: |
+      export GOPATH=$HOME/go
+      export GOBIN=$GOPATH/bin
+      export PATH=$PATH:$GOBIN
+      go mod download
+      go generate ./...
+      go test ./...
     displayName: 'Run go test command'
   - script: goreleaser --snapshot --skip-publish --rm-dist
     condition: not(contains(variables['build.sourceBranch'], 'refs/tags/'))

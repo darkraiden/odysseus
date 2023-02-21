@@ -2,12 +2,13 @@ package main
 
 import (
 	"flag"
+	"net/http"
+
 	"github.com/darkraiden/odysseus/internal/DNS"
 	"github.com/darkraiden/odysseus/internal/ipaddress"
 	"github.com/darkraiden/odysseus/internal/odysseus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"net/http"
 )
 
 type flags struct {
@@ -46,7 +47,6 @@ func main() {
 		viper.Get("cloudflare.email").(string),
 		viper.Get("cloudflare.zone_name").(string),
 	)
-
 	if err != nil {
 		log.Fatalf("fucked it: %s", err.Error())
 
