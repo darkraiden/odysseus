@@ -23,7 +23,9 @@ steps:
       sudo apt install goreleaser
     displayName: Install goreleaser
     workingDirectory: '$(system.defaultWorkingDirectory)'
-  - script: go install github.com/golang/mock/mockgen
+  - bash: |
+      GO111MODULE=off go get github.com/golang/mock/mockgen
+      GO111MODULE=off go install github.com/golang/mock/mockgen
     displayName: 'Install mockgen'
   - script: go mod download && go generate ./... && go test ./...
     displayName: 'Run go test command'
